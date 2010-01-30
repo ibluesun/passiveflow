@@ -6,6 +6,18 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleCycle", "SampleCycle\SampleCycle.csproj", "{A28D4CAB-0509-4696-948D-558E64B2D7A0}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs02.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = PassiveFlow\\PassiveFlow.csproj
+		SccProjectName1 = PassiveFlow
+		SccLocalPath1 = PassiveFlow
+		SccProjectUniqueName2 = SampleCycle\\SampleCycle.csproj
+		SccProjectName2 = SampleCycle
+		SccLocalPath2 = SampleCycle
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
