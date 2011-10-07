@@ -58,6 +58,24 @@ namespace SampleCycle
             }
 
 
+            Flow DynamicFlow = new Flow();
+
+            Step f = DynamicFlow.Add("B1", 20);
+            f.Value = "This is bad";
+            f=DynamicFlow.Add("B2", 30);
+            f=DynamicFlow.Add("B3", 40);
+            f=DynamicFlow.Add("B4", 50);
+            f=DynamicFlow.Add("F1", 80);
+            f=DynamicFlow.Add("F2", 90);
+            f.Value = 90;
+
+            Console.WriteLine(DynamicFlow);
+            DynamicFlow.StepLast();
+            Console.WriteLine(DynamicFlow);
+
+            Flow df = DynamicFlow.CurrentStep;
+
+            Console.WriteLine(df);
 
         }
 
