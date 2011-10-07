@@ -235,12 +235,12 @@ namespace PassiveFlow
             {
                 foreach (Step fi in innerSteps)
                 {
-                    if (fi.Name == name)
+                    if (fi.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase))
                         return fi;
 
                 }
-                throw new StepException("Flow step not found");
 
+                throw new StepException("Flow step not found");
             }
         }
 
