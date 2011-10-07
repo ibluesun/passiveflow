@@ -18,6 +18,9 @@ namespace PassiveFlow
         //holding the field types
         private List<FieldInfo> _MyFields = new  List<FieldInfo>();
 
+        /// <summary>
+        /// this constructor initialize the class that is inherited from the Flow class to know the fields that marked as steps
+        /// </summary>
         public Flow()
         {
             //getting the type of this instance
@@ -77,17 +80,18 @@ namespace PassiveFlow
 
 
         #region Flowstep Add procedures
-        private Step Add(string stepName, int stepId)
+        public Step Add(string stepName, int stepId)
         {
-            Step fi = new Step(this.GetType());
+            Step fi = new Step(this);
             fi.Name = stepName;
             fi.Id = stepId;
             innerSteps.Add(fi);
             return fi;
         }
-        private Step Add(string stepName, int stepId, Type[] stepAssociatedTypes)
+
+        public Step Add(string stepName, int stepId, params Type[] stepAssociatedTypes)
         {
-            Step fi = new Step(this.GetType());
+            Step fi = new Step(this);
             fi.Name = stepName;
             fi.Id = stepId;
             fi.AssociatedTypes = stepAssociatedTypes;
@@ -97,7 +101,7 @@ namespace PassiveFlow
 
         private Step Add(string stepName, int stepId, Type[] stepAssociatedTypes, bool skip)
         {
-            Step fi = new Step(this.GetType());
+            Step fi = new Step(this);
             fi.Name = stepName;
             fi.Id = stepId;
             fi.AssociatedTypes = stepAssociatedTypes;
@@ -108,9 +112,9 @@ namespace PassiveFlow
             return fi;
         }
 
-        private Step Add(string stepName, int stepId, Type[] stepAssociatedTypes, bool skip, StepAction[] stepActions)
+        public Step Add(string stepName, int stepId, Type[] stepAssociatedTypes, bool skip, params StepAction[] stepActions)
         {
-            Step fi = new Step(this.GetType());
+            Step fi = new Step(this);
             fi.Name = stepName;
             fi.Id = stepId;
             fi.AssociatedTypes = stepAssociatedTypes;

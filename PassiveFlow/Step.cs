@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PassiveFlow
 {
-    public struct Step
+    public class Step
     {
         /// <summary>
         /// Name of the step.
@@ -18,13 +18,18 @@ namespace PassiveFlow
         public Type[] AssociatedTypes;
 
         /// <summary>
-        /// Step Id
+        /// Step Id: is a number that explicitly unique to the step.
         /// </summary>
         public int Id;
 
 
         /// <summary>
-        /// Indicates if this stage should be skipped during 
+        /// Value of the step could be any arbitary thing.
+        /// </summary>
+        public object Value;
+
+        /// <summary>
+        /// Indicates if this stage should be skipped during automatic transition of the flow host.
         /// </summary>
         public bool Skip;
 
@@ -44,6 +49,10 @@ namespace PassiveFlow
         /// </summary>
         public readonly Type FlowHostType;
 
+        /// <summary>
+        /// the host object that host this step.
+        /// </summary>
+        public readonly Flow FlowContainer;
 
         /// <summary>
         /// The actions of this step.
@@ -51,15 +60,18 @@ namespace PassiveFlow
         /// </summary>
         public StepAction[] AttachedActions;
 
-        public Step(Type flowHostType)
+        public Step(Flow flow)
         {
+            FlowContainer = flow;
 
-            FlowHostType = flowHostType;
+            FlowHostType = flow.GetType();
 
             Name = "";
             AssociatedTypes = null;
             Id = 0;
             Skip = false;
+
+            Value = null;
 
             AttachedActions = null;
             Description_1 = ""; Description_2 = "";
@@ -81,8 +93,6 @@ namespace PassiveFlow
         {
             return fi.Id;
         }
-
-        
 
         /// <summary>
         /// Get the name of the step.
@@ -116,10 +126,24 @@ namespace PassiveFlow
         /// <returns></returns>
         public static implicit operator Flow(Step fi)
         {
-            Flow Parent = (Flow)fi.FlowHostType.Assembly.CreateInstance(fi.FlowHostType.FullName);
+            Flow Parent;
+            if (fi.FlowHostType == typeof(Flow))
+            {
+                // dynamically created flow
+                Parent = new Flow();
+                var fiContainer = fi.FlowContainer;
+                foreach (Step s in fiContainer)
+                {
+                    var ns = Parent.Add(s.Name, s.Id, s.AssociatedTypes, s.Skip, s.AttachedActions);
+                    ns.Value = s.Value;
+                }
+            }
+            else
+            {
+                Parent = (Flow)fi.FlowHostType.Assembly.CreateInstance(fi.FlowHostType.FullName);
+            }
             Parent.ReSetToStep(fi.Id);
             return Parent;
         }
     }
-
 }
