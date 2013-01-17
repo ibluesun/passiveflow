@@ -5,7 +5,6 @@ using System.Text;
 
 namespace PassiveFlow
 {
-    [Serializable]
     public class StepException : Exception
     {
         public StepException()

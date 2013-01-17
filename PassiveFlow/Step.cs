@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Linq.Expressions;
 
 namespace PassiveFlow
 {
@@ -111,12 +112,32 @@ namespace PassiveFlow
         {
             get
             {
-                Flow Parent = (Flow)this.FlowHostType.Assembly.CreateInstance(this.FlowHostType.FullName);
+                
+
+                Flow Parent = CreateHostFlow();
                 Parent.ReSetToStep(this.Id);
                 return Parent.CurrentStepIndex;
             }
         }
 
+
+        Func<Flow> HostFlowCreationFunction;
+
+        private Flow CreateHostFlow()
+        {
+            //  (Flow)this.FlowHostType.Assembly.CreateInstance(this.FlowHostType.FullName)
+
+            if (HostFlowCreationFunction == null)
+            {
+                var g = Expression.New(FlowHostType);
+
+                var q = Expression.Lambda<Func<Flow>>(g, null);
+                HostFlowCreationFunction =  q.Compile();
+            }
+
+            return HostFlowCreationFunction();
+    
+        }
 
         /// <summary>
         /// get the enclosing class and return new instance from it
@@ -140,7 +161,7 @@ namespace PassiveFlow
             }
             else
             {
-                Parent = (Flow)fi.FlowHostType.Assembly.CreateInstance(fi.FlowHostType.FullName);
+                Parent = (Flow)fi.CreateHostFlow();
             }
             Parent.ReSetToStep(fi.Id);
             return Parent;

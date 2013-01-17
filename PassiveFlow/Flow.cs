@@ -235,7 +235,7 @@ namespace PassiveFlow
             {
                 foreach (Step fi in innerSteps)
                 {
-                    if (fi.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase))
+                    if (fi.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                         return fi;
 
                 }
