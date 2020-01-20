@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs/PassiveFlowSolution
+/PassiveFlow/bin/Debug
+/PassiveFlow/obj
+/SampleCycle/bin/Debug
+/SampleCycle/obj/x86/Debug
